@@ -5,6 +5,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit";
   className?: string;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({ children, onClick, type = "button", className }) => {

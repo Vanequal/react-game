@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { GameSession } from '../api/api';
 import ConfirmCard from '../components/UI/ConfirmCard';
@@ -29,23 +28,31 @@ const ConfirmSending: React.FC = () => {
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-  useEffect(() => {
-    if (session?.sessionEndTime) {
-      const endTime = new Date(session.sessionEndTime).getTime();
-      const interval = setInterval(() => {
-        const now = Date.now();
-        const seconds = Math.max(Math.floor((endTime - now) / 1000), 0);
-        setSecondsRemaining(seconds);
-        if (seconds === 0) clearInterval(interval);
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [session?.sessionEndTime]);
 
   if (!session) {
     navigate("/");
     return null;
   }
+
+  useEffect(() => {
+    if (session?.sessionEndTime) {
+      const endTime = new Date(session.sessionEndTime).getTime();
+      const interval = setInterval(() => {
+        const now = Date.now();
+        const secs = Math.max(Math.floor((endTime - now) / 1000), 0);
+        setSecondsRemaining(secs);
+        if (secs === 0) clearInterval(interval);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [session?.sessionEndTime]);
+
+  const formatTime = (seconds: number): string => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
     <div
@@ -73,22 +80,40 @@ const ConfirmSending: React.FC = () => {
             <div className={styles.title}>
               <h1 style={{ color: '#0DC11F' }}>Удачная покупка!</h1>
             </div>
+            {/* Отображаем таймер в мобильной версии */}
+            <div className={styles.timer}>
+              <p>Осталось: {formatTime(secondsRemaining)}</p>
+            </div>
             <div className={styles.orderInfo}>
-              <p>Спасибо за покупку товара в нашем магазине! <br /> Будем рады Вашему отзыву, обращайтесь ещё!</p>
+              <p>
+                Спасибо за покупку товара в нашем магазине! <br /> Будем рады Вашему отзыву, обращайтесь ещё!
+              </p>
             </div>
             <div className={styles.buttons}>
               <Button>Оставить отзыв</Button>
               <ButtonInline>Главная</ButtonInline>
-              <a href="#" style={{ color: 'white', textDecoration: 'none' }}>Посмотреть версию издания</a>
-              <a href="#" style={{ color: 'white', textDecoration: 'none' }}>Посмотреть игру</a>
+              <a href="#" style={{ color: 'white', textDecoration: 'none' }}>
+                Посмотреть версию издания
+              </a>
+              <a href="#" style={{ color: 'white', textDecoration: 'none' }}>
+                Посмотреть игру
+              </a>
             </div>
           </div>
           <div className={styles.mobileFooter}>
             <div className={styles.langContainer}>
-              <span className={`${styles.lang} ${lang === 'RU' ? styles.active : ''}`}
-                    onClick={() => setLang('RU')}>RU</span>
-              <span className={`${styles.lang} ${lang === 'ENG' ? styles.active : ''}`}
-                    onClick={() => setLang('ENG')}>ENG</span>
+              <span
+                className={`${styles.lang} ${lang === 'RU' ? styles.active : ''}`}
+                onClick={() => setLang('RU')}
+              >
+                RU
+              </span>
+              <span
+                className={`${styles.lang} ${lang === 'ENG' ? styles.active : ''}`}
+                onClick={() => setLang('ENG')}
+              >
+                ENG
+              </span>
             </div>
             <div className={styles.telegramAnimation}>
               <TelegramAnimation telegramLink="https://t.me/your_telegram" />
@@ -104,7 +129,7 @@ const ConfirmSending: React.FC = () => {
             <ConfirmCard
               gameTitle="Command & Conquer™ Red Alert™ 3- Uprising"
               orderNumber="Заказ #99999999"
-              timerTime="00:00:00"
+              timerTime={formatTime(secondsRemaining)}
             />
             <ProfileCheckCard
               headerText="Удачная покупка"

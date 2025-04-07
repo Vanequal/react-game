@@ -118,7 +118,7 @@ const SteamContact: React.FC = () => {
             </div>
             <div className={styles.badgeTimerRow}>
               <DLCBadge />
-              <ActivationTimer initialTime={60} />
+              <ActivationTimer />
             </div>
             <div className={styles.title}>
               <p>{t.gameTitle}</p>

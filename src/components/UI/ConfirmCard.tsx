@@ -10,7 +10,7 @@ interface ConfirmCardProps {
   timerTime: string;
 }
 
-const ConfirmCard: React.FC<ConfirmCardProps> = ({ gameTitle, orderNumber, timerTime }) => {
+const ConfirmCard: React.FC<ConfirmCardProps> = ({ gameTitle, orderNumber}) => {
   return (
     <div className={styles.confirmCard}>
       <div className={styles.imageContainer}>
@@ -24,7 +24,8 @@ const ConfirmCard: React.FC<ConfirmCardProps> = ({ gameTitle, orderNumber, timer
       <div className={styles.orderInfo}>
         <span className={styles.orderNumber}><p>{orderNumber}</p></span>
         <DLCBadge />
-        <ActivationTimer time={timerTime} />
+        {/* Убираем передачу свойства time */}
+        <ActivationTimer />
       </div>
       
       <div className={styles.footerText}>
