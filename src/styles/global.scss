@@ -1,0 +1,21 @@
+@import "./variables.scss";
+
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("../assets/sfprodisplay-regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "SF Pro Display", sans-serif;
+  background: $background-color;
+  color: $text-color;
+}

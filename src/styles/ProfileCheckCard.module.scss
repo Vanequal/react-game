@@ -1,0 +1,97 @@
+@import "./variables.scss"; 
+
+h1, p, span, a{
+    font-family: $font-family;
+}
+
+.profileCheckCard {
+  overflow: hidden;
+  padding: 20px;
+  border: 1px solid transparent;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.profileCheckCard h1{
+    font-size: 2rem;
+}
+
+.profileCheckCard p{
+    font-size: 1.2rem;
+}
+
+.profileCheckCard a{
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+
+.header {
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.avatarWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profileText {
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  
+  a {
+    color: #7921D1;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.langContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang {
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+  color: white;
+}
+
+.active {
+  color: #A852FF; // Можно заменить на переменную $secondary-color, если переменные подключены
+  background-color: #2B1734;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.telegramAnimation {
+  margin-left: auto;
+}

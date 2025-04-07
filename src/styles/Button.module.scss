@@ -1,0 +1,25 @@
+.button {
+  width: 17.5em;
+  padding: 15px;
+  border: none;
+  background-color: #7921D1;
+  color: white;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #A852FF;
+  }
+}
+
+@media (max-width: 768px) {
+  .button {
+    width: 100%;
+    font-size: 18px;
+    margin-top: 5px;
+  }
+}

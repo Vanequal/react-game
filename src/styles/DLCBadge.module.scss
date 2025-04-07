@@ -1,0 +1,34 @@
+@import './variables.scss';
+
+span{
+    font-family: $font-family;
+}
+
+.dlcBadge {
+    background-color: #2B1734;
+    border: 2px solid #7921D1;
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: white;
+  }
+  
+  .badgetext {
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  .badgeIcon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #fff;
+  }
+  

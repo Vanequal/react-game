@@ -1,0 +1,42 @@
+.checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #838383;
+  
+    input {
+      display: none;
+    }
+  
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      border: 2px solid white;
+      border-radius: 4px;
+      margin-right: 10px;
+      position: relative;
+      transition: all 0.2s ease;
+  
+      &.checked {
+        background-color: #7921D1;
+        border-color: #7921D1;
+  
+        &::after {
+          content: "";
+          position: absolute;
+          left: 6px;
+          top: 2px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+      }
+    }
+  
+    .label {
+      font-size: 20px;
+    }
+  }

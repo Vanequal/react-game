@@ -1,0 +1,33 @@
+.input {
+  width: 16em;
+  padding: 15px;
+  border: 2px solid #454545;
+  border-radius: 3px;
+  font-size: 20px;
+  outline: none;
+  transition: 0.3s;
+  background-color: #161616;
+  text-align: center;
+  color: white;
+  
+  &::placeholder {
+    text-align: center;
+    font-size: 20px;
+    color: #838383;
+  }
+
+  &:focus {
+    border-color: #A852FF;
+  }
+}
+
+@media (max-width: 768px) {
+  .input {
+    width: 89%;
+    font-size: 18px;
+    
+    &::placeholder {
+      font-size: 18px;
+    }
+  }
+}
