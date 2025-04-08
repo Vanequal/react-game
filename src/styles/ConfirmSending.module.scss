@@ -1,14 +1,11 @@
-@import "./variables.scss";
-
 .confirmSendingPage {
   background-color: #161616;
   min-height: 100vh;
   width: 100%;
   background-size: cover;
   background-position: center;
-  position: relative;
   background-repeat: no-repeat;
-  padding: 20px;
+  padding: 2rem;
 
   // Desktop-верстка
   .cardsContainer {
@@ -27,9 +24,10 @@
   .confirmSendingPage {
     background-size: contain;
     background-position: top center;
+    overflow-x: hidden;
     box-sizing: border-box;
     min-height: 100vh;
-    padding: 20px;
+    padding: 2rem;
 
     &::before {
       content: '';
@@ -55,7 +53,6 @@
     }
   }
 
-  /* Мобильный header: логотип слева и по центру текст */
   .mobileHeader {
     display: flex;
     align-items: center;
@@ -70,7 +67,7 @@
     left: 0;
 
     img {
-      width: 60px; // делаем лого меньше
+      width: 60px;
     }
   }
 
@@ -88,6 +85,7 @@
     flex-direction: column;
     align-items: center;
     padding: 0 20px;
+    padding-bottom: 80px; // убедитесь, что контент не скрыт под футером
 
     .avatarWrapper {
       margin: 20px 0;
@@ -96,6 +94,8 @@
         width: 100px;
         height: 100px;
         border-radius: 50%;
+        max-width: 100%;
+        height: auto;
       }
     }
 
@@ -137,33 +137,32 @@
   .mobileFooter {
     position: fixed;
     bottom: 0;
-    top: 650px;
     left: 0;
     right: 0;
     z-index: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 100vw;
     padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.5);
+  }
 
-    .langContainer {
-      display: flex;
-      gap: 10px;
+  .langContainer {
+    display: flex;
+    gap: 10px;
 
-      .lang {
-        cursor: pointer;
-        font-size: 14px;
-        transition: 0.3s;
-        color: white;
-        white-space: nowrap;
+    .lang {
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+      color: white;
+      white-space: nowrap;
 
-        &.active {
-          color: $secondary-color; 
-          background-color: #2B1734;
-          padding: 10px;
-          border-radius: 5px;
-        }
+      &.active {
+        color: $secondary-color;
+        background-color: #2B1734;
+        padding: 10px;
+        border-radius: 5px;
       }
     }
   }
