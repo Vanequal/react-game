@@ -18,7 +18,7 @@ export interface GameSession {
             createdAt: new Date().toISOString(),
           });
         } else {
-          reject(new Error('Уникальный код не найден'));
+          reject(new Error('Некорректный код заказа. \nПроверьте код ещё раз.'));
         }
       }, 500);
     });

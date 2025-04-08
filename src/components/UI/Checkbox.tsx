@@ -3,9 +3,10 @@ import { useState } from "react";
 
 interface CheckboxProps {
   label: string;
+  error?: boolean; 
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ label }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ label, error = false }) => {
   const [checked, setChecked] = useState(false);
 
   const handleChange = () => {
@@ -20,7 +21,9 @@ const Checkbox: React.FC<CheckboxProps> = ({ label }) => {
         onChange={handleChange}
         required
       />
-      <span className={`${styles.checkmark} ${checked ? styles.checked : ''}`}></span>
+      <span 
+        className={`${styles.checkmark} ${checked ? styles.checked : ''} ${error ? styles.error : ''}`}
+      ></span>
       <span className={styles.label}>{label}</span>
     </label>
   );

@@ -103,7 +103,6 @@ h1 {
       right: 0;
       bottom: 0;
       height: 50%;
-      /* Высота градиента снизу */
       background: rgb(19, 20, 22);
       background: linear-gradient(180deg, rgba(19, 20, 22, 1) 0%, rgba(0, 0, 0, 1) 85%);
       z-index: 0;
@@ -117,6 +116,10 @@ h1 {
     left: 20px;
     justify-content: flex-start;
     z-index: 1;
+  }
+
+  .headerLogo img {
+    width: 3rem;
   }
 
   .card {

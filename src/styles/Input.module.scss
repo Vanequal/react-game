@@ -9,7 +9,11 @@
   background-color: #161616;
   text-align: center;
   color: white;
-  
+
+  &.error {
+    border-color: rgba(114, 20, 20, 1);
+  }
+
   &::placeholder {
     text-align: center;
     font-size: 20px;

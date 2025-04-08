@@ -30,6 +30,7 @@ const Home = () => {
   const [lang, setLang] = useState<"RU" | "ENG">("RU");
   const [isMobile, setIsMobile] = useState(false);
   const [code, setCode] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const t = translations[lang];
@@ -43,24 +44,38 @@ const Home = () => {
 
   const handleConfirm = async () => {
     try {
+      setError(null);
       const session: GameSession = await checkUniqueCode(code.trim());
       navigate("/steamcontact", { state: { session } });
     } catch (err: any) {
       const errorMsg = lang === "RU" ? err.message : 
         (err.message === "Неверный код" ? "Invalid code" : err.message);
-      alert(errorMsg);
+      setError(errorMsg);
     }
   };
   
   const changeLang = (newLang: "RU" | "ENG") => {
     setLang(newLang);
-
   };
-
-
 
   return (
     <div className={styles.home} style={{ backgroundImage: `url(${background})` }}>
+      {error && (
+        <div 
+          style={{
+            background: 'rgba(23, 8, 8, 1)',       
+            border: '2px solid rgba(234, 36, 36, 1)', 
+            color: 'rgba(234, 36, 36, 1)',             
+            padding: '1rem',
+            marginBottom: '1rem',
+            borderRadius: '4px',
+            whiteSpace: 'pre-line',
+          }}
+        >
+          {error}
+        </div>
+      )}
+      
       <div className={styles.headerLogo}>
         <img src={logo} alt="Logo" className={styles.logo} />
       </div>
@@ -71,11 +86,12 @@ const Home = () => {
           <Input 
             placeholder={t.inputPlaceholder} 
             value={code}
+            error={!!error} // Передаём флаг ошибки
             onChange={(e) => setCode(e.target.value)}
           />
           <Button onClick={handleConfirm}>{t.confirmButton}</Button>
           <div className={styles.checkboxContainer}>
-            <Checkbox label={t.notRobot} />
+            <Checkbox label={t.notRobot} error={!!error} />
           </div>
           <p className={styles.contact}>{t.contact}</p>
           <div className={styles.footer}>
@@ -91,12 +107,13 @@ const Home = () => {
       ) : (
         <>
           <div className={styles.mobileContent}>
-          <h1 dangerouslySetInnerHTML={{ __html: t.title }} />
+            <h1 dangerouslySetInnerHTML={{ __html: t.title }} />
             <div className={styles.mobileInput}>
               <Input 
                 placeholder={t.inputPlaceholder} 
                 className="w-full" 
                 value={code}
+                error={!!error}
                 onChange={(e) => setCode(e.target.value)}
               />
             </div>
@@ -104,7 +121,7 @@ const Home = () => {
               <Button onClick={handleConfirm}>{t.confirmButton}</Button>
             </div>
             <div className={styles.mobileCheckbox}>
-              <Checkbox label={t.notRobot} />
+              <Checkbox label={t.notRobot} error={!!error} />
             </div>
             <p className={styles.contact}>{t.contact}</p>
           </div>
