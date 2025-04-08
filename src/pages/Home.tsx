@@ -130,7 +130,7 @@ const Home = () => {
               <span className={`${styles.lang} ${lang === "RU" ? styles.active : ""}`}
                     onClick={() => changeLang("RU")}>RU</span>
               <span className={`${styles.lang} ${lang === "ENG" ? styles.active : ""}`}
-                    onClick={() => changeLang("ENG")}>ENG</span>
+                    onClick={() => changeLang("ENG")}>EN</span>
             </div>
             <div className={styles.telegramIcon}>
               <TelegramAnimation telegramLink="https://t.me/your_telegram" />

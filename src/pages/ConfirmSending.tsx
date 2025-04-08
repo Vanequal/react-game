@@ -92,11 +92,9 @@ const ConfirmSending: React.FC = () => {
             </div>
             <div className={styles.orderInfo}>
               <p dangerouslySetInnerHTML={{ __html: t('thankYou') }} />
-              {/* Здесь можно добавить, если необходимо, также отображение таймера */}
             </div>
             <div className={styles.buttons}>
               <Button>{t('leaveReview')}</Button>
-              {/* Кнопке "Главная" добавляем onClick */}
               <ButtonInline onClick={handleGoHome}>{t('main')}</ButtonInline>
               <a href="#" style={{ color: 'white', textDecoration: 'none' }}>
                 {t('viewGameEdition')}
@@ -118,7 +116,7 @@ const ConfirmSending: React.FC = () => {
                 className={`${styles.lang} ${lang === 'ENG' ? styles.active : ''}`}
                 onClick={() => handleLanguageChange('ENG')}
               >
-                ENG
+                EN
               </span>
             </div>
             <div className={styles.telegramAnimation}>

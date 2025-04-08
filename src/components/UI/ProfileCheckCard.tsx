@@ -100,7 +100,7 @@ const ProfileCheckCard: React.FC<ProfileCheckCardProps> = ({
             className={`${styles.lang} ${i18n.language.toLowerCase().startsWith('en') ? styles.active : ''}`}
             onClick={() => i18n.changeLanguage('en')}
           >
-            ENG
+            EN
           </span>
         </div>
         <div className={styles.telegramAnimation}>

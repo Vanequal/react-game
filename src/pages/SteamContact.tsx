@@ -114,7 +114,7 @@ const SteamContact: React.FC = () => {
               <span className={`${styles.lang} ${i18n.language === 'ru' ? styles.active : ''}`}
                     onClick={() => changeLang('ru')}>RU</span>
               <span className={`${styles.lang} ${i18n.language === 'en' ? styles.active : ''}`}
-                    onClick={() => changeLang('en')}>ENG</span>
+                    onClick={() => changeLang('en')}>EN</span>
             </div>
             <div className={styles.telegramAnimation}>
               <TelegramAnimation telegramLink="https://t.me/your_telegram" />
