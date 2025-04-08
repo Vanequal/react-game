@@ -28,6 +28,9 @@
     box-sizing: border-box;
     min-height: 100vh;
     padding: 2rem;
+    overflow-y: auto;      
+    -webkit-overflow-scrolling: touch; 
+    
 
     &::before {
       content: '';
