@@ -60,6 +60,10 @@ const ConfirmSending: React.FC = () => {
     i18n.changeLanguage(language === 'RU' ? 'ru' : 'en');
   };
 
+  const handleGoHome = () => {
+    navigate("/");
+  };
+
   return (
     <div
       className={styles.confirmSendingPage}
@@ -88,10 +92,12 @@ const ConfirmSending: React.FC = () => {
             </div>
             <div className={styles.orderInfo}>
               <p dangerouslySetInnerHTML={{ __html: t('thankYou') }} />
+              {/* Здесь можно добавить, если необходимо, также отображение таймера */}
             </div>
             <div className={styles.buttons}>
               <Button>{t('leaveReview')}</Button>
-              <ButtonInline>{t('main')}</ButtonInline>
+              {/* Кнопке "Главная" добавляем onClick */}
+              <ButtonInline onClick={handleGoHome}>{t('main')}</ButtonInline>
               <a href="#" style={{ color: 'white', textDecoration: 'none' }}>
                 {t('viewGameEdition')}
               </a>
@@ -143,9 +149,10 @@ const ConfirmSending: React.FC = () => {
               buttonMainText={t('leaveReview')}
               steamNickname={t('thankYou')}
               showClose={true}
+              onMainButtonClick={handleGoHome}
+              onInlineButtonClick={() => window.close()}
             />
           </div>
-         
         </>
       )}
     </div>

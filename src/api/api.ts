@@ -1,15 +1,12 @@
-// api/api.ts
 
-// Интерфейс, описывающий данные сессии, строго типизированный под данные бэкенда
 export interface GameSession {
     uniqueCode: string;
-    statusId: number; // 1 – код найден, 2 – подтверждение Steam, 3 – добавление в друзья, 4 – подтверждение отправки
+    statusId: number;
     steamProfileUrl?: string;
-    createdAt: string;      // ISO-строка, например, "2025-04-07T12:00:00Z"
-    sessionEndTime?: string; // ISO-строка для таймера (время окончания подтверждения отправки)
+    createdAt: string;   
+    sessionEndTime?: string; 
   }
   
-  // Имитация проверки уникального кода
   export const checkUniqueCode = (uniqueCode: string): Promise<GameSession> => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -30,7 +27,6 @@ export interface GameSession {
   
   
   
-  // Имитация подтверждения того, что аккаунт Steam принадлежит пользователю
   export const confirmSteamAccount = (session: GameSession): Promise<GameSession> => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -42,7 +38,6 @@ export interface GameSession {
     });
   };
   
-  // Имитация ожидания приглашения в друзья (например, с задержкой в 3 секунды)
   export const waitForFriendInvitation = (session: GameSession): Promise<GameSession> => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -54,7 +49,6 @@ export interface GameSession {
     });
   };
   
-  // Имитация старта страницы подтверждения отправки с установкой таймера (60 секунд)
   export const startConfirmSendingTimer = (session: GameSession): Promise<GameSession> => {
     return new Promise((resolve) => {
       const endTime = new Date(Date.now() + 60000).toISOString(); // текущее время + 60 сек.
