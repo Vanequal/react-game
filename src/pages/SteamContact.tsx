@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { confirmSteamAccount, GameSession } from '../api/api';
+import { useTranslation } from 'react-i18next';
 import ConfirmCard from '../components/UI/ConfirmCard';
 import ProfileCheckCard from '../components/UI/ProfileCheckCard';
 import Button from '../components/UI/Button';
@@ -14,48 +15,18 @@ import mobileBackground from '../assets/DLC-background-mobile.png';
 import avatar from '../assets/avatar.png';
 import styles from '../styles/ConfirmSending.module.scss';
 
-const translations = {
-  RU: {
-    headerText: "Для активации DLC нужна основная игра на аккаунте",
-    gameTitle: "Command & Conquer™ Red Alert™ 3- Uprising",
-    orderNumber: "Заказ #99999999",
-    checkProfile: "Проверка профиля",
-    steamNickname: "Steam никнейм покупателя. Проверьте перед покупкой!",
-    changeAccount: "Сменить аккаунт",
-    thisIsMyAccount: "Это мой аккаунт",
-    min: "мин",
-    sec: "с"
-  },
-  ENG: {
-    headerText: "The base game is required on your account to activate DLC",
-    gameTitle: "Command & Conquer™ Red Alert™ 3- Uprising",
-    orderNumber: "Order #99999999",
-    checkProfile: "Profile verification",
-    steamNickname: "Buyer's Steam nickname. Please check before purchase!",
-    changeAccount: "Change account",
-    thisIsMyAccount: "This is my account",
-    min: "min",
-    sec: "sec"
-  }
-};
-
 const SteamContact: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [lang, setLang] = useState<'RU' | 'ENG'>('RU');
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const session: GameSession | undefined = location.state?.session;
 
-  const t = translations[lang];
-
   const [steamUrl, setSteamUrl] = useState(session?.steamProfileUrl || '');
-
-
   const [secondsLeft, setSecondsLeft] = useState(119);
-  
 
-  const changeLang = (newLang: "RU" | "ENG") => {
-    setLang(newLang);
+  const changeLang = (newLang: "ru" | "en") => {
+    i18n.changeLanguage(newLang);
   };
 
   useEffect(() => {
@@ -83,15 +54,15 @@ const SteamContact: React.FC = () => {
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
-  const buttonText = `${t.thisIsMyAccount} ${minutes} ${t.min} ${seconds < 10 ? `0${seconds}` : seconds} ${t.sec}`;
+  const buttonText = `${t('thisIsMyAccount')} ${minutes} ${t('min')} ${seconds < 10 ? `0${seconds}` : seconds} ${t('sec')}`;
 
   const handleConfirm = async () => {
     const updatedSession = await confirmSteamAccount({ ...session, steamProfileUrl: steamUrl });
-    navigate("/checkcode", { state: { session: updatedSession, language: lang } });
+    navigate("/checkcode", { state: { session: updatedSession, language: i18n.language } });
   };
   
   const handleChangeAccount = () => {
-    const newUrl = prompt("Введите ссылку на ваш профиль Steam", steamUrl);
+    const newUrl = prompt(t('enterSteamProfileLink'), steamUrl);
     if (newUrl) {
       setSteamUrl(newUrl.trim());
     }
@@ -106,27 +77,27 @@ const SteamContact: React.FC = () => {
         <>
           <div className={styles.mobileHeader}>
             <div className={styles.headerLeft}>
-              <img src={logo} alt="Логотип" />
+              <img src={logo} alt={t('logo')} />
             </div>
             <div className={styles.headerCenter}>
-              <p>{t.headerText}</p>
+            <p dangerouslySetInnerHTML={{ __html: t('headerText') }} />
             </div>
           </div>
           <div className={styles.mobileContent}>
             <div className={styles.avatarWrapper}>
-              <img src={avatar} alt="Avatar" className={styles.avatar} />
+              <img src={avatar} alt={t('avatar')} className={styles.avatar} />
             </div>
             <div className={styles.badgeTimerRow}>
               <DLCBadge />
               <ActivationTimer />
             </div>
             <div className={styles.title}>
-              <p>{t.gameTitle}</p>
+              <p>{t('gameTitle')}</p>
             </div>
             <div className={styles.orderInfo}>
-              <p>{t.orderNumber}</p>
+              <p>{t('orderNumber', { number: '99999999' })}</p>
               <p>
-                {t.steamNickname}
+                {t('steamNickname')}
                 <br />
                 <a href={steamUrl} target="_blank" rel="noopener noreferrer">
                   {steamUrl}
@@ -135,15 +106,15 @@ const SteamContact: React.FC = () => {
             </div>
             <div className={styles.buttons}>
               <Button onClick={handleConfirm}>{buttonText}</Button>
-              <ButtonInline onClick={handleChangeAccount}>{t.changeAccount}</ButtonInline>
+              <ButtonInline onClick={handleChangeAccount}>{t('changeAccount')}</ButtonInline>
             </div>
           </div>
           <div className={styles.mobileFooter}>
             <div className={styles.langContainer}>
-              <span className={`${styles.lang} ${lang === 'RU' ? styles.active : ''}`}
-                    onClick={() => changeLang('RU')}>RU</span>
-              <span className={`${styles.lang} ${lang === 'ENG' ? styles.active : ''}`}
-                    onClick={() => changeLang('ENG')}>ENG</span>
+              <span className={`${styles.lang} ${i18n.language === 'ru' ? styles.active : ''}`}
+                    onClick={() => changeLang('ru')}>RU</span>
+              <span className={`${styles.lang} ${i18n.language === 'en' ? styles.active : ''}`}
+                    onClick={() => changeLang('en')}>ENG</span>
             </div>
             <div className={styles.telegramAnimation}>
               <TelegramAnimation telegramLink="https://t.me/your_telegram" />
@@ -153,23 +124,23 @@ const SteamContact: React.FC = () => {
       ) : (
         <>
           <div className={styles.logo}>
-            <img src={logo} alt="Логотип" />
+            <img src={logo} alt={t('logo')} />
           </div>
           <div className={styles.cardsContainer}>
             <ConfirmCard
-              gameTitle={t.gameTitle}
-              orderNumber={t.orderNumber}
+              gameTitle={t('gameTitle')}
+              orderNumber={t('orderNumber', { number: '99999999' })}
               timerTime="00:00:00"
             />
             <ProfileCheckCard
-              headerText={t.checkProfile}
+              headerText={t('checkProfile')}
               profileUrl={steamUrl} 
-              buttoninlinetext={t.changeAccount}
+              buttoninlinetext={t('changeAccount')}
               showMainButton={true}
               friendRequestMessage={false}
               showSellerLink={false}
               buttonMainText={buttonText}
-              steamNickname={`${t.steamNickname} <br /> <br />`}
+              steamNickname={`${t('steamNickname')} <br /> <br />`}
               showClose={false}
               onMainButtonClick={handleConfirm}
               onInlineButtonClick={handleChangeAccount} 

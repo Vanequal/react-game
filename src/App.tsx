@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import SteamContact from "./pages/SteamContact";
 import CheckCode from "./pages/CheckCode";
 import ConfirmSending from "./pages/ConfirmSending";
+import './styles/global.scss';
 
 const App = () => {
   return (

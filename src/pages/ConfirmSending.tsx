@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { GameSession } from '../api/api';
+import { useTranslation } from 'react-i18next';
 import ConfirmCard from '../components/UI/ConfirmCard';
 import ProfileCheckCard from '../components/UI/ProfileCheckCard';
 import Button from '../components/UI/Button';
@@ -14,8 +15,9 @@ import giftAvatar from '../assets/gift-avatar.png';
 import styles from '../styles/CheckCode.module.scss';
 
 const ConfirmSending: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [isMobile, setIsMobile] = useState(false);
-  const [lang, setLang] = useState<'RU' | 'ENG'>('RU');
+  const [lang, setLang] = useState<'RU' | 'ENG'>(i18n.language === 'en' ? 'ENG' : 'RU');
   const [secondsRemaining, setSecondsRemaining] = useState(60);
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,7 +29,6 @@ const ConfirmSending: React.FC = () => {
     window.addEventListener('resize', checkIsMobile);
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
-
 
   if (!session) {
     navigate("/");
@@ -54,6 +55,11 @@ const ConfirmSending: React.FC = () => {
     return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const handleLanguageChange = (language: 'RU' | 'ENG') => {
+    setLang(language);
+    i18n.changeLanguage(language === 'RU' ? 'ru' : 'en');
+  };
+
   return (
     <div
       className={styles.confirmSendingPage}
@@ -78,25 +84,19 @@ const ConfirmSending: React.FC = () => {
               <img src={giftAvatar} alt="Gift Avatar" className={styles.giftAvatarOverlay} />
             </div>
             <div className={styles.title}>
-              <h1 style={{ color: '#0DC11F' }}>Удачная покупка!</h1>
-            </div>
-            {/* Отображаем таймер в мобильной версии */}
-            <div className={styles.timer}>
-              <p>Осталось: {formatTime(secondsRemaining)}</p>
+              <h1 style={{ color: '#0DC11F' }}>{t('successfulPurchase')}</h1>
             </div>
             <div className={styles.orderInfo}>
-              <p>
-                Спасибо за покупку товара в нашем магазине! <br /> Будем рады Вашему отзыву, обращайтесь ещё!
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: t('thankYou') }} />
             </div>
             <div className={styles.buttons}>
-              <Button>Оставить отзыв</Button>
-              <ButtonInline>Главная</ButtonInline>
+              <Button>{t('leaveReview')}</Button>
+              <ButtonInline>{t('main')}</ButtonInline>
               <a href="#" style={{ color: 'white', textDecoration: 'none' }}>
-                Посмотреть версию издания
+                {t('viewGameEdition')}
               </a>
               <a href="#" style={{ color: 'white', textDecoration: 'none' }}>
-                Посмотреть игру
+                {t('viewGame')}
               </a>
             </div>
           </div>
@@ -104,13 +104,13 @@ const ConfirmSending: React.FC = () => {
             <div className={styles.langContainer}>
               <span
                 className={`${styles.lang} ${lang === 'RU' ? styles.active : ''}`}
-                onClick={() => setLang('RU')}
+                onClick={() => handleLanguageChange('RU')}
               >
                 RU
               </span>
               <span
                 className={`${styles.lang} ${lang === 'ENG' ? styles.active : ''}`}
-                onClick={() => setLang('ENG')}
+                onClick={() => handleLanguageChange('ENG')}
               >
                 ENG
               </span>
@@ -128,22 +128,36 @@ const ConfirmSending: React.FC = () => {
           <div className={styles.cardsContainer}>
             <ConfirmCard
               gameTitle="Command & Conquer™ Red Alert™ 3- Uprising"
-              orderNumber="Заказ #99999999"
+              orderNumber={`${t('order')}99999999`}
               timerTime={formatTime(secondsRemaining)}
             />
             <ProfileCheckCard
-              headerText="Удачная покупка"
+              headerText={t('successfulPurchase')}
               profileUrl=""
-              buttoninlinetext="Главная"
+              buttoninlinetext={t('main')}
               showMainButton={true}
               friendRequestMessage={false}
               showGame={true}
               showGameEdition={true}
               avatarSrc={gift}
-              buttonMainText="Оставить отзыв"
-              steamNickname='Спасибо за покупку товара в нашем магазине! <br /> Будем рады Вашему отзыву, обращайтесь ещё!'
+              buttonMainText={t('leaveReview')}
+              steamNickname={t('thankYou')}
               showClose={true}
             />
+          </div>
+          <div className={styles.langContainer} style={{ position: 'absolute', bottom: '20px', right: '20px' }}>
+            <span
+              className={`${styles.lang} ${lang === 'RU' ? styles.active : ''}`}
+              onClick={() => handleLanguageChange('RU')}
+            >
+              RU
+            </span>
+            <span
+              className={`${styles.lang} ${lang === 'ENG' ? styles.active : ''}`}
+              onClick={() => handleLanguageChange('ENG')}
+            >
+              ENG
+            </span>
           </div>
         </>
       )}

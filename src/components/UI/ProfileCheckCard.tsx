@@ -1,5 +1,5 @@
-// components/UI/ProfileCheckCard.tsx
-import React, { useState } from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from '../../styles/ProfileCheckCard.module.scss';
 import Button from './Button';
 import ButtonInline from './ButtonInline';
@@ -20,7 +20,7 @@ interface ProfileCheckCardProps {
   showGameEdition?: boolean;
   showClose?: boolean;
   onMainButtonClick?: () => void;
-  onInlineButtonClick?: () => void; // Новый проп для смены аккаунта
+  onInlineButtonClick?: () => void; 
 }
 
 const ProfileCheckCard: React.FC<ProfileCheckCardProps> = ({
@@ -39,12 +39,13 @@ const ProfileCheckCard: React.FC<ProfileCheckCardProps> = ({
   onMainButtonClick,
   onInlineButtonClick,
 }) => {
-  const [lang, setLang] = useState<'RU' | 'ENG'>('RU');
+  const { t, i18n } = useTranslation();
 
   let messageHtml = '';
   if (friendRequestMessage === true) {
-    messageHtml =
-      'Вам отправлен запрос на добавление друзей в <br /> Steam. Вам необходимо принять нашего бота с <br /> никнеймом “Bot Name” в друзья. Далее вам <br /> отправят купленный товар';
+    messageHtml = t('friendRequestMessage', {
+      defaultValue: 'Вам отправлен запрос на добавление друзей в <br /> Steam. Вам необходимо принять нашего бота с <br /> никнеймом “Bot Name” в друзья. Далее вам <br /> отправят купленный товар.'
+    });
   } else if (typeof friendRequestMessage === 'string') {
     messageHtml = friendRequestMessage;
   }
@@ -63,30 +64,42 @@ const ProfileCheckCard: React.FC<ProfileCheckCardProps> = ({
         {messageHtml && <p dangerouslySetInnerHTML={{ __html: messageHtml }} />}
       </div>
       <div className={styles.buttons}>
-        {showMainButton && <Button onClick={onMainButtonClick}>{buttonMainText}</Button>}
-        <ButtonInline onClick={onInlineButtonClick}>{buttoninlinetext}</ButtonInline>
+        {showMainButton && (
+          <Button onClick={onMainButtonClick}>
+            {buttonMainText}
+          </Button>
+        )}
+        <ButtonInline onClick={onInlineButtonClick}>
+          {buttoninlinetext}
+        </ButtonInline>
         {showSellerLink && (
           <a href="#" style={{ color: 'white' }}>
-            Связаться с продавцом
+            {t('contactSeller', { defaultValue: 'Связаться с продавцом' })}
           </a>
         )}
         {showGameEdition && (
           <a href="#" style={{ color: 'white' }}>
-            Посмотреть версию издания
+            {t('viewGameEdition', { defaultValue: 'Посмотреть версию издания' })}
           </a>
         )}
         {showGame && (
           <a href="#" style={{ color: 'white' }}>
-            Посмотреть игру
+            {t('viewGame', { defaultValue: 'Посмотреть игру' })}
           </a>
         )}
       </div>
       <div className={styles.footer}>
         <div className={styles.langContainer}>
-          <span className={`${styles.lang} ${lang === 'RU' ? styles.active : ''}`} onClick={() => setLang('RU')}>
+          <span
+            className={`${styles.lang} ${i18n.language.toLowerCase().startsWith('ru') ? styles.active : ''}`}
+            onClick={() => i18n.changeLanguage('ru')}
+          >
             RU
           </span>
-          <span className={`${styles.lang} ${lang === 'ENG' ? styles.active : ''}`} onClick={() => setLang('ENG')}>
+          <span
+            className={`${styles.lang} ${i18n.language.toLowerCase().startsWith('en') ? styles.active : ''}`}
+            onClick={() => i18n.changeLanguage('en')}
+          >
             ENG
           </span>
         </div>
@@ -96,12 +109,15 @@ const ProfileCheckCard: React.FC<ProfileCheckCardProps> = ({
       </div>
       {showClose && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <a href="#" style={{ color: 'white', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+          <a
+            href="#"
+            style={{ color: 'white', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            <span>Закрыть</span>
+            <span>{t('close', { defaultValue: 'Закрыть' })}</span>
           </a>
         </div>
       )}

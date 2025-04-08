@@ -91,7 +91,7 @@ const Home = () => {
       ) : (
         <>
           <div className={styles.mobileContent}>
-            <h1>{t.title}</h1>
+          <h1 dangerouslySetInnerHTML={{ __html: t.title }} />
             <div className={styles.mobileInput}>
               <Input 
                 placeholder={t.inputPlaceholder} 

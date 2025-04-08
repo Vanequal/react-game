@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import DLCBadge from './DLCBadge';
 import ActivationTimer from './ActivationTimer';
 import DLCImg from '../../assets/DLC-img.jpeg';
@@ -10,7 +11,9 @@ interface ConfirmCardProps {
   timerTime: string;
 }
 
-const ConfirmCard: React.FC<ConfirmCardProps> = ({ gameTitle, orderNumber}) => {
+const ConfirmCard: React.FC<ConfirmCardProps> = ({ gameTitle, orderNumber }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.confirmCard}>
       <div className={styles.imageContainer}>
@@ -22,14 +25,17 @@ const ConfirmCard: React.FC<ConfirmCardProps> = ({ gameTitle, orderNumber}) => {
       </h1>
       
       <div className={styles.orderInfo}>
-        <span className={styles.orderNumber}><p>{orderNumber}</p></span>
+        <span className={styles.orderNumber}>
+          <p>{orderNumber}</p>
+        </span>
         <DLCBadge />
-        {/* Убираем передачу свойства time */}
         <ActivationTimer />
       </div>
       
       <div className={styles.footerText}>
-        <p>Для активации DLC нужна <br /> основная игра на аккаунте.</p>
+        <p dangerouslySetInnerHTML={{ __html: t('activationInfo', {
+            defaultValue: 'Для активации DLC нужна <br /> основная игра на аккаунте.'
+          }) }} />
       </div>
     </div>
   );
