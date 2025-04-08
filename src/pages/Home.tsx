@@ -101,7 +101,7 @@ const Home = () => {
               />
             </div>
             <div className={styles.mobileButton}>
-              <Button className="w-full" onClick={handleConfirm}>{t.confirmButton}</Button>
+              <Button onClick={handleConfirm}>{t.confirmButton}</Button>
             </div>
             <div className={styles.mobileCheckbox}>
               <Checkbox label={t.notRobot} />

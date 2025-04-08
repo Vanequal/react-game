@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/ActivationTimer.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const ActivationTimer: React.FC = () => {
+  const { t } = useTranslation();
   const TIMER_DURATION = 24 * 3600 * 1000;
 
   const getStartTime = (): number => {
@@ -44,7 +46,7 @@ const ActivationTimer: React.FC = () => {
 
   return (
     <div className={styles.activationTimer}>
-      <span>Время на&nbsp;активацию {formatTime(remainingTime)}</span>
+      <span>{t('activationTime', { time: formatTime(remainingTime) })}</span>
       <div className={styles.badgeIcon}>?</div>
     </div>
   );

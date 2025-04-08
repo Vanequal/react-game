@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "../../styles/TelegramAnimation.module.scss";
 import telegramIcon from "../../assets/telegram-icon.svg";
 import animationForm from "../../assets/telegram-form-animation.webp";
+import { useTranslation } from 'react-i18next';
 
 interface TelegramAnimationProps {
   telegramLink?: string;
@@ -13,6 +14,7 @@ const TelegramAnimation = ({ telegramLink = "https://t.me/your_telegram" }: Tele
   const [isRotating, setIsRotating] = useState(false);
   const [rotationDirection, setRotationDirection] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -84,7 +86,7 @@ const TelegramAnimation = ({ telegramLink = "https://t.me/your_telegram" }: Tele
           >
             <img src={animationForm} alt="Telegram Form" className={styles.animationFormImage} />
             <div className={styles.animationFormText}>
-              У нас раздачи игр! Подпишись
+            {t('animationFormText')}
             </div>
           </motion.div>
         )}

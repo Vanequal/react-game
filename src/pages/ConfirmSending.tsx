@@ -145,20 +145,7 @@ const ConfirmSending: React.FC = () => {
               showClose={true}
             />
           </div>
-          <div className={styles.langContainer} style={{ position: 'absolute', bottom: '20px', right: '20px' }}>
-            <span
-              className={`${styles.lang} ${lang === 'RU' ? styles.active : ''}`}
-              onClick={() => handleLanguageChange('RU')}
-            >
-              RU
-            </span>
-            <span
-              className={`${styles.lang} ${lang === 'ENG' ? styles.active : ''}`}
-              onClick={() => handleLanguageChange('ENG')}
-            >
-              ENG
-            </span>
-          </div>
+         
         </>
       )}
     </div>
